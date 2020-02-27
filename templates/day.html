@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block body %}
+  <body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="{{ url_for('index') }}">Food Tracker</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="{{ url_for('index') }}">Home</a></li>
+            <li><a href="{{ url_for('food') }}">Add Food Item</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container theme-showcase col-sm-6 col-sm-offset-3" role="main">
+
+      <div class="row">
+        <div>
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title">{{ dates.0.formatted }}</h3>
+            </div>
+
+            <div class="panel-body">
+
+              <form method="POST" action="{{ url_for('view', date=dates.0.unformatted) }}">
+                <div class="form-group">
+                  <select class="form-control" name="food-select">
+                    {% for food in food_list %}
+                    <option value={{ food.id }}>{{ food.name }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Add</button>
+
+              </form>
+
+              <div class="page-header"></div>
+
+              <ul class="nav nav-pills" role="tablist">
+                <li class="active"><a>Total</a></li>
+                <li><a>Protein: <span class="badge">{{total_proteins}}</span></a></li>
+                <li><a>Carbohydates: <span class="badge">{{total_carbs}}</span></a></li>
+                <li><a>Fat: <span class="badge">{{total_fat}}</span></a></li>
+                <li><a>Calories: <span class="badge">{{total_calories}}</span></a></li>
+              </ul>
+
+            </div>
+
+            <div class="page-header"></div>
+
+            <form method="POST" action="{{ url_for('view', date=dates.0.unformatted) }}">
+              <div class="panel-body">
+            {% for food in date_food_list %}
+              <ul class="nav nav-pills" role="tablist">
+                <li class="active"><a>{{food.name}}</a></li>
+                <li><a>Protein: <span class="badge">{{food.protein}}</span></a></li>
+                <li><a>Carbohydates: <span class="badge">{{food.carbohydrates}}</span></a></li>
+                <li><a>Fat: <span class="badge">{{food.fat}}</span></a></li>
+                <li><a>Calories: <span class="badge">{{food.calories}}</span></a></li>
+                <li><a><button aria-label="Close Account Info Modal Box" name="cancel" value={{ food.id }}>&times;</button></a></li>
+              </ul>
+            {% endfor %}
+             </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </body>
+{% endblock %}
