@@ -1,11 +1,9 @@
 from flask import Flask, render_template, g, request
 from functools import reduce
 from datetime import datetime
-from database import get_db
-
+from flaskr.database import get_db
 
 app = Flask(__name__)
-
 
 @app.teardown_appcontext
 def close_db(error):
